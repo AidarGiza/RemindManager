@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RemindManager.Views.EventEditorPage"
+             xmlns:vm="clr-namespace:RemindManager.ViewModels"
+             Title="{Binding PageName}">
+    <ContentPage.BindingContext>
+        <vm:EventEditorViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <RadioButton Content="Моментальное" Value="{Binding IsInstantEvent}" GroupName="EventType"/>
+                <RadioButton Content="Длительное"  Value="{Binding IsContinuousEvent}" GroupName="EventType"/>
+            </StackLayout>
+            
+            <Label Text="Название"/>
+            <Entry Text="{Binding Reminder.Name}" />
+
+            <Label Text="Описание"/>
+            <Editor Text="{Binding Reminder.Description}" />
+
+            <Label Text="Частота"/>
+            <Picker Title="Выберите частоту" ItemsSource="{Binding Frequencies}" SelectedItem="{Binding SelectedFrequency}"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
