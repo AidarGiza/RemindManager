@@ -30,6 +30,7 @@ namespace RemindManager.Models.Frequencies
         /// </summary>
         public static readonly FrequencySelectionModel Everyday = new FrequencySelectionModel(4, "Каждый день");
 
+
         private FrequencySelectionModel(int id, string name)
         {
             this.id = id;
