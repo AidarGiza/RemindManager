@@ -1,5 +1,4 @@
 ﻿using RemindManager.Models.Interfaces;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
@@ -27,6 +26,11 @@ namespace RemindManager.Models.Frequencies
         public Command AddDayCommand { get; set; }
 
         /// <summary>
+        /// Команда для удаления дня
+        /// </summary>
+        public Command RemoveDayCommand { get; set; }
+
+        /// <summary>
         /// Шаблон контрола для выбора дней в месяце
         /// </summary>
         public ControlTemplate Template => Application.Current.Resources["DaysOnMonthFreqDataTemplate"] as ControlTemplate;
@@ -38,13 +42,34 @@ namespace RemindManager.Models.Frequencies
         {
             Days = new ObservableCollection<DayEntry>();
             AddDayCommand = new Command(AddDay);
+            RemoveDayCommand = new Command<DayEntry>(RemoveDay);
             AddDay();
         }
 
         /// <summary>
         /// Добавить день
         /// </summary>
-        private void AddDay() => Days.Add(new DayEntry(1));
+        private void AddDay()
+        {
+            Days.Add(new DayEntry(1));
+            OnPropertyChanged(nameof(CanRemoveDay));
+            
+        }
+
+        /// <summary>
+        /// Удалить день
+        /// </summary>
+        /// <param name="day">День для удаления</param>
+        private void RemoveDay(DayEntry day)
+        {
+            _ = Days.Remove(day);
+            if (Days.Count == 1) OnPropertyChanged(nameof(CanRemoveDay));
+        }
+
+        /// <summary>
+        /// Условие для удаления дня
+        /// </summary>
+        public bool CanRemoveDay => Days.Count > 1;
     }
 
     /// <summary>

@@ -7,6 +7,9 @@ namespace RemindManager.Models.Interfaces
     /// </summary>
     public interface IFrequencyData
     {
+        /// <summary>
+        /// Шаболон контрола данных частоты напоминания
+        /// </summary>
         ControlTemplate Template { get; }
     }
 }

@@ -39,7 +39,7 @@
                                 <StackLayout Orientation="Horizontal">
                                     <Entry Keyboard="Numeric" Text="{Binding Day}" VerticalOptions="Center" FontSize="23" HorizontalOptions="FillAndExpand" TextChanged="DayEntry_TextChanged" Unfocused="DayEntry_Unfocused"/>
                                     <Stepper Value="{Binding Day}" Minimum="1" Maximum="31"/>
-                                    <Button Text="X" Font="29" CornerRadius="35" Padding="3,-3,0,0"/>
+                                    <Button Text="X" Font="29" CornerRadius="35" Padding="3,-3,0,0" IsVisible="{TemplateBinding BindingContext.Reminder.FrequencyData.CanRemoveDay}" Command="{TemplateBinding BindingContext.Reminder.FrequencyData.RemoveDayCommand}" CommandParameter="{Binding}"/>
                                 </StackLayout>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

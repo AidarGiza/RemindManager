@@ -1,6 +1,5 @@
 ﻿using RemindManager.Enums;
 using RemindManager.Resources.StringResourcs;
-using System;
 using System.Collections.Generic;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.CommunityToolkit.ObjectModel;

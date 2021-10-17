@@ -3,10 +3,7 @@ using RemindManager.Models;
 using RemindManager.Models.Frequencies;
 using RemindManager.Models.Interfaces;
 using RemindManager.Resources.StringResourcs;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
@@ -72,11 +69,6 @@ namespace RemindManager.ViewModels
         public List<FrequencySelectionModel> Frequencies => FrequencySelectionModel.GetList();
 
         /// <summary>
-        /// Список шаблонов для напоминаний с определеннымы частотами
-        /// </summary>
-        //public Dictionary<FrequencySelectionModel, ControlTemplate> FrequencyDataTemplatesDictionary { get; set; }
-
-        /// <summary>
         /// Выбранная модель частоты
         /// </summary>
         public FrequencySelectionModel SelectedFrequencyModel
@@ -84,7 +76,6 @@ namespace RemindManager.ViewModels
             get => selectedFrequencyModel;
             set
             {
-                //if (FrequencyDataTemplatesDictionary.TryGetValue(value, out ControlTemplate template)) FrequencyDataTemplate = template;
                 switch (value.Id)
                 {
                     case FrequenciesEnum.OneTime: Reminder.FrequencyData = new OneTimeFreqModel(); break;
@@ -96,18 +87,8 @@ namespace RemindManager.ViewModels
                 SetProperty(ref selectedFrequencyModel, value);
             }
         }
+
         private FrequencySelectionModel selectedFrequencyModel;
-
-        /// <summary>
-        /// Control для выбранной частоты
-        /// </summary>
-        //public ControlTemplate FrequencyDataTemplate
-        //{
-        //    get => frequencyDataTemplate;
-        //    set => SetProperty(ref frequencyDataTemplate, value);
-        //}
-        //private ControlTemplate frequencyDataTemplate;
-
 
         /// <summary>
         /// Конструктор редактора для создания нового события-0
@@ -171,7 +152,7 @@ namespace RemindManager.ViewModels
         private async void OnSave()
         {
             string newLang = "en";
-            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo(newLang);
+            //LocalizationResourceManager.Current.CurrentCulture = new CultureInfo(newLang);
             //Reminder.Name = "Name";
             //SelectedFrequency = "asdfawe";
             //ReminderModel newItem = new ReminderModel()
