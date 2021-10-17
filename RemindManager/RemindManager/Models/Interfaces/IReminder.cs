@@ -1,4 +1,5 @@
-﻿using RemindManager.Enums;
+﻿using RemindManager.Models.Frequencies;
+using System.Collections.Generic;
 
 namespace RemindManager.Models.Interfaces
 {
@@ -20,13 +21,18 @@ namespace RemindManager.Models.Interfaces
         string Description { get; set; }
 
         /// <summary>
-        /// Частота события вида <see cref="FrequenciesEnum"/>
+        /// Частота события вида <see cref="FrequencySelectionModel"/>
         /// </summary>
-        FrequenciesEnum Frequency { get; set; }
+        FrequencySelectionModel Frequency { get; set; }
 
         /// <summary>
         /// Данные частоты напоминания
         /// </summary>
         IFrequencyData FrequencyData { get; set; }
+
+        /// <summary>
+        /// Список чисел, которые указывают, за сколько минут нужно напомнить
+        /// </summary>
+        List<byte> RemindBefore { get; set; }
     }
 }

@@ -1,9 +1,13 @@
 ﻿using RemindManager.Enums;
 using RemindManager.Models;
+using RemindManager.Models.Frequencies;
 using RemindManager.Models.Interfaces;
+using RemindManager.Resources.StringResourcs;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
 namespace RemindManager.ViewModels
@@ -13,6 +17,12 @@ namespace RemindManager.ViewModels
     /// </summary>
     public class EventEditorViewModel : BaseViewModel
     {
+        #region locolized strings
+
+        
+
+        #endregion
+
         /// <summary>
         /// Название страницы
         /// </summary>
@@ -59,31 +69,48 @@ namespace RemindManager.ViewModels
         /// <summary>
         /// Список возможных частот
         /// </summary>
-        public List<string> Frequencies
-        {
-            get
-            {
-                List<string> listOfFrequencies = new List<string>();
-                foreach (FrequenciesEnum frequencyName in (FrequenciesEnum[]) Enum.GetValues(typeof(FrequenciesEnum))) listOfFrequencies.Add(frequencyName.ToString());
-                return listOfFrequencies;
-            }
-        }
+        public List<FrequencySelectionModel> Frequencies => FrequencySelectionModel.GetList();
 
         /// <summary>
-        /// Выбранная частота
+        /// Список шаблонов для напоминаний с определеннымы частотами
         /// </summary>
-        public SelectedFrequency
-        {
-            get
-            {
-                List<string> listOfFrequencies = new List<string>();
-                foreach (FrequenciesEnum frequencyName in (FrequenciesEnum[]) Enum.GetValues(typeof(FrequenciesEnum))) listOfFrequencies.Add(frequencyName.ToString());
-                return listOfFrequencies;
-            }
-        }
+        //public Dictionary<FrequencySelectionModel, ControlTemplate> FrequencyDataTemplatesDictionary { get; set; }
 
         /// <summary>
-        /// Конструктор редактора для создания нового события
+        /// Выбранная модель частоты
+        /// </summary>
+        public FrequencySelectionModel SelectedFrequencyModel
+        {
+            get => selectedFrequencyModel;
+            set
+            {
+                //if (FrequencyDataTemplatesDictionary.TryGetValue(value, out ControlTemplate template)) FrequencyDataTemplate = template;
+                switch (value.Id)
+                {
+                    case FrequenciesEnum.OneTime: Reminder.FrequencyData = new OneTimeFreqModel(); break;
+                    case FrequenciesEnum.DaysOnYear: Reminder.FrequencyData = new DaysOnYearFreqModel(); break;
+                    case FrequenciesEnum.DaysOnMonth: Reminder.FrequencyData = new DaysOnMonthFreqModel(); break;
+                    case FrequenciesEnum.DaysOnWeek: Reminder.FrequencyData = new DaysOnWeekFreqModel(); break;
+                    case FrequenciesEnum.Everyday: Reminder.FrequencyData = null; break;
+                }
+                SetProperty(ref selectedFrequencyModel, value);
+            }
+        }
+        private FrequencySelectionModel selectedFrequencyModel;
+
+        /// <summary>
+        /// Control для выбранной частоты
+        /// </summary>
+        //public ControlTemplate FrequencyDataTemplate
+        //{
+        //    get => frequencyDataTemplate;
+        //    set => SetProperty(ref frequencyDataTemplate, value);
+        //}
+        //private ControlTemplate frequencyDataTemplate;
+
+
+        /// <summary>
+        /// Конструктор редактора для создания нового события-0
         /// </summary>
         /// <param name="reminderToEdit">Редактируемое событие</param>
         public EventEditorViewModel(IReminder reminderToEdit = null)
@@ -100,18 +127,33 @@ namespace RemindManager.ViewModels
             else
             {
                 Reminder = reminderToEdit;
+                PageName = Reminder.Name;
 
                 if (reminderToEdit is InstantEventModel) isInstantEvent = true;             // Если редактируемое событие - моментальное
                 else if (reminderToEdit is ContinuousEventModel) isContinuousEvent = true;  // Если редактируемое событие - длительное
                 else InitNewEvent();                                                        // Если переданный объект неизвестен создается новое
             }
 
+            LocalizationResourceManager.Current.PropertyChanged += CurrentCulture_PropertyChanged;
+        }
+
+        /// <summary>
+        /// При изменении языка приложения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CurrentCulture_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.OnPropertyChanged(nameof(Frequencies));
         }
 
         /// <summary>
         /// Пустой конструктор редактора 
         /// </summary>
-        public EventEditorViewModel() : this(null) { }
+        public EventEditorViewModel() : this(null)
+        {
+            
+        }
 
         /// <summary>
         /// Создать новое событие
@@ -120,6 +162,7 @@ namespace RemindManager.ViewModels
         {
             isInstantEvent = true;
             Reminder = new InstantEventModel();
+            PageName = AppResources.NewReminder;
         }
 
         /// <summary>
@@ -127,6 +170,10 @@ namespace RemindManager.ViewModels
         /// </summary>
         private async void OnSave()
         {
+            string newLang = "en";
+            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo(newLang);
+            //Reminder.Name = "Name";
+            //SelectedFrequency = "asdfawe";
             //ReminderModel newItem = new ReminderModel()
             //{
             //    Id = Guid.NewGuid().ToString(),
@@ -159,5 +206,8 @@ namespace RemindManager.ViewModels
 
             Reminder = newReminder;
         }
+
+        public LocalizedString Text { get; } = new LocalizedString(() => AppResources.RemInstant);
+
     }
 }

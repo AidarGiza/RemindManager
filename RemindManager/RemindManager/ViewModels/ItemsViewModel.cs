@@ -3,7 +3,9 @@ using RemindManager.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
 namespace RemindManager.ViewModels
@@ -26,6 +28,7 @@ namespace RemindManager.ViewModels
             ItemTapped = new Command<ReminderModel>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
+
         }
 
         //async Task ExecuteLoadItemsCommand()
@@ -69,7 +72,10 @@ namespace RemindManager.ViewModels
 
         private async void OnAddItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
+
+            string newLang = "ru";
+            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo(newLang);
+            //await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
         async void OnItemSelected(ReminderModel item)

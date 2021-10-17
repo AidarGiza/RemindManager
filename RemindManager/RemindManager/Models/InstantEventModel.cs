@@ -1,4 +1,5 @@
 ﻿using RemindManager.Models.Interfaces;
+using System;
 
 namespace RemindManager.Models
 {
@@ -7,6 +8,9 @@ namespace RemindManager.Models
     /// </summary>
     public class InstantEventModel : ReminderModel, IReminder
     {
-        
+        /// <summary>
+        /// Время события
+        /// </summary>
+        public DateTime EventTime { get; set; }
     }
 }

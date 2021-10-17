@@ -1,12 +1,14 @@
-﻿using RemindManager.Enums;
+﻿using RemindManager.Models.Frequencies;
 using RemindManager.Models.Interfaces;
+using System.Collections.Generic;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace RemindManager.Models
 {
     /// <summary>
     /// Основной абстрактный класс напоминания
     /// </summary>
-    public abstract class ReminderModel : IReminder
+    public abstract class ReminderModel : ObservableObject, IReminder
     {
         /// <summary>
         /// Идентификатор
@@ -16,21 +18,41 @@ namespace RemindManager.Models
         /// <summary>
         /// Наименование
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get => name;
+            set => SetProperty(ref name, value);
+        }
+        private string name;
 
         /// <summary>
         /// Описание
         /// </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get => description;
+            set => SetProperty(ref description, value);
+        }
+        public string description;
 
         /// <summary>
-        /// Частота события вида <see cref="FrequenciesEnum"/>
+        /// Частота события вида <see cref="FrequencySelectionModel"/>
         /// </summary>
-        public FrequenciesEnum Frequency { get; set; }
+        public FrequencySelectionModel Frequency { get; set; }
 
         /// <summary>
         /// Данные частоты напоминания
         /// </summary>
-        public IFrequencyData FrequencyData { get; set; }
+        public IFrequencyData FrequencyData
+        {
+            get => frequencyData;
+            set => SetProperty(ref frequencyData, value);
+        }
+        private IFrequencyData frequencyData;
+
+        /// <summary>
+        /// Список чисел, которые указывают, за сколько минут нужно напомнить
+        /// </summary>
+        public List<byte> RemindBefore { get; set; }
     }
 }

@@ -1,9 +1,12 @@
-﻿namespace RemindManager.Models.Interfaces
+﻿using Xamarin.Forms;
+
+namespace RemindManager.Models.Interfaces
 {
     /// <summary>
     /// Данные о частоте напоминания
     /// </summary>
     public interface IFrequencyData
     {
+        ControlTemplate Template { get; }
     }
 }

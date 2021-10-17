@@ -1,40 +1,56 @@
-﻿using System;
+﻿using RemindManager.Enums;
+using RemindManager.Resources.StringResourcs;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using Xamarin.CommunityToolkit.Helpers;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace RemindManager.Models.Frequencies
 {
-    public sealed class FrequencySelectionModel
+    public sealed class FrequencySelectionModel : ObservableObject
     {
-        private readonly int id;
-        private readonly string name;
+        public FrequenciesEnum Id { get; }
+        public LocalizedString Name { get; }
+        public string Key { get; }
 
         /// <summary>
         /// Один раз
         /// </summary>
-        public static readonly FrequencySelectionModel OneTime = new FrequencySelectionModel(0, "Один раз");
+        public static FrequencySelectionModel OneTime { get; } = new FrequencySelectionModel(FrequenciesEnum.OneTime, new LocalizedString(() => AppResources.FreqOneTime), "OneTime");
         /// <summary>
         /// Дни в году
         /// </summary>
-        public static readonly FrequencySelectionModel DaysOnYear = new FrequencySelectionModel(1, "Дни в году");
+        public static FrequencySelectionModel DaysOnYear { get; } = new FrequencySelectionModel(FrequenciesEnum.DaysOnYear, new LocalizedString(() => AppResources.FreqDaysOnYear), "DaysOnYear");
         /// <summary>
         /// Дни в месяце
         /// </summary>
-        public static readonly FrequencySelectionModel DaysOnMonth = new FrequencySelectionModel(2, "Дни в месяце");
+        public static FrequencySelectionModel DaysOnMonth { get; } = new FrequencySelectionModel(FrequenciesEnum.DaysOnMonth, new LocalizedString(() => AppResources.FreqDaysOnMonth), "DaysOnMonth");
         /// <summary>
         /// Дни в неделе
         /// </summary>
-        public static readonly FrequencySelectionModel DaysOnWeek = new FrequencySelectionModel(3, "Дни в неделе");
+        public static FrequencySelectionModel DaysOnWeek { get; } = new FrequencySelectionModel(FrequenciesEnum.DaysOnWeek, new LocalizedString(() => AppResources.FreqDaysOnWeek), "DaysOnWeek");
         /// <summary>
         /// Каждый день
         /// </summary>
-        public static readonly FrequencySelectionModel Everyday = new FrequencySelectionModel(4, "Каждый день");
+        public static FrequencySelectionModel Everyday { get; } = new FrequencySelectionModel(FrequenciesEnum.Everyday, new LocalizedString(() => AppResources.FreqEveryday), "Everyday");
 
-
-        private FrequencySelectionModel(int id, string name)
+        private FrequencySelectionModel(FrequenciesEnum id, LocalizedString name, string key)
         {
-            this.id = id;
-            this.name = name;
+            Id = id;
+            Name = name;
+            Key = key;
+        }
+        
+        public static List<FrequencySelectionModel> GetList()
+        {
+            return new List<FrequencySelectionModel>()
+            {
+                OneTime,
+                DaysOnYear,
+                DaysOnMonth,
+                DaysOnWeek,
+                Everyday
+            };
         }
     }
 }

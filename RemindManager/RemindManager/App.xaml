@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:freqs="clr-namespace:RemindManager.Models.Frequencies"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RemindManager.App">
     <!--
@@ -27,6 +29,77 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+
+            <!--Шаблон контрола для выбора дней в месяце-->
+            <ControlTemplate x:Key="DaysOnMonthFreqDataTemplate">
+                <Grid RowDefinitions="Auto,Auto,Auto" >
+                    <StackLayout Margin="5" BindableLayout.ItemsSource="{TemplateBinding BindingContext.Reminder.FrequencyData.Days, Mode=TwoWay}" Grid.Row="1" >
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal">
+                                    <Entry Keyboard="Numeric" Text="{Binding Day}" VerticalOptions="Center" FontSize="23" HorizontalOptions="FillAndExpand" TextChanged="DayEntry_TextChanged" Unfocused="DayEntry_Unfocused"/>
+                                    <Stepper Value="{Binding Day}" Minimum="1" Maximum="31"/>
+                                    <Button Text="X" Font="29" CornerRadius="35" Padding="3,-3,0,0"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <Button Grid.Row="2" Text="{xct:Translate Add}" Command="{TemplateBinding BindingContext.Reminder.FrequencyData.AddDayCommand}"/>
+                </Grid>
+            </ControlTemplate>
+
+            <!--Шаблон контрола для выбора дней в неделе-->
+            <ControlTemplate x:Key="DaysOnWeekFreqDataTemplate" x:DataType="freqs:DaysOnWeekFreqModel">
+                <Grid ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,Auto">
+                    <Label Text="{xct:Translate DayMon}" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Row="1" HorizontalOptions="Center"/>
+
+                    <Label Grid.Column="1" Text="{xct:Translate DayTu}" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
+
+                    <Label Grid.Column="2" Text="{xct:Translate DayWed}" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="2" Grid.Row="1" HorizontalOptions="Center"/>
+
+                    <Label Grid.Column="3" Text="{xct:Translate DayTh}" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="3" Grid.Row="1" HorizontalOptions="Center"/>
+
+                    <Label Grid.Column="4" Text="{xct:Translate DayFri}" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="4" Grid.Row="1" HorizontalOptions="Center"/>
+
+                    <Label Grid.Column="5" Text="{xct:Translate DaySat}" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="5" Grid.Row="1" HorizontalOptions="Center"/>
+
+                    <Label Grid.Column="6" Text="{xct:Translate DaySun}" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="6" Grid.Row="1" HorizontalOptions="Center"/>
+                </Grid>
+            </ControlTemplate>
+
+            <!--Шаблон контрола для выбора дней в году-->
+            <ControlTemplate x:Key="DaysOnYearFreqDataTemplate" x:DataType="freqs:DaysOnYearFreqModel">
+                <ListView ItemsSource="{Binding DayAndMonth}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Stepper/>
+                                    <Picker/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ControlTemplate>
+
+            <!--Шаблон контрола для выбора даты-->
+            <ControlTemplate x:Key="OneTimeFreqDataTemplate" x:DataType="freqs:OneTimeFreqModel">
+                <DatePicker/>
+            </ControlTemplate>
+
+            <!--Шаблон контрола каждого дня-->
+            <ControlTemplate x:Key="EverydayFreqDataTemplate">
+                <Line/>
+            </ControlTemplate>
+
         </ResourceDictionary>        
     </Application.Resources>
 </Application>

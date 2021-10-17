@@ -1,6 +1,5 @@
 ﻿using RemindManager.Models.Interfaces;
 using System;
-using System.Collections.Generic;
 
 namespace RemindManager.Models
 {
@@ -18,10 +17,5 @@ namespace RemindManager.Models
         /// Время окончания события
         /// </summary>
         public DateTime EndTime { get; set; }
-
-        /// <summary>
-        /// Список чисел, которые указывают, за сколько минут нужно напомнить
-        /// </summary>
-        public List<byte> RemindBefore { get; set; }
     }
 }
