@@ -52,25 +52,25 @@
             <ControlTemplate x:Key="DaysOnWeekFreqDataTemplate" x:DataType="freqs:DaysOnWeekFreqModel">
                 <Grid ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,Auto">
                     <Label Text="{xct:Translate DayMon}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Row="1" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsMondayChecked}"/>
 
                     <Label Grid.Column="1" Text="{xct:Translate DayTu}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsTuesdayChecked}"/>
 
                     <Label Grid.Column="2" Text="{xct:Translate DayWed}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="2" Grid.Row="1" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsWednesdayChecked}"/>
 
                     <Label Grid.Column="3" Text="{xct:Translate DayTh}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="3" Grid.Row="1" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="3" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsThursdayChecked}"/>
 
                     <Label Grid.Column="4" Text="{xct:Translate DayFri}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="4" Grid.Row="1" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="4" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsFridayChecked}"/>
 
                     <Label Grid.Column="5" Text="{xct:Translate DaySat}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="5" Grid.Row="1" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="5" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsSaturdayChecked}"/>
 
                     <Label Grid.Column="6" Text="{xct:Translate DaySun}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="6" Grid.Row="1" HorizontalOptions="Center"/>
+                    <CheckBox Grid.Column="6" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsSundayChecked}"/>
                 </Grid>
             </ControlTemplate>
 
