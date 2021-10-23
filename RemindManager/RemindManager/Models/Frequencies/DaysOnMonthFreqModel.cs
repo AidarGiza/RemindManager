@@ -1,5 +1,6 @@
 ﻿using RemindManager.Models.Interfaces;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
@@ -36,6 +37,11 @@ namespace RemindManager.Models.Frequencies
         public ControlTemplate Template => Application.Current.Resources["DaysOnMonthFreqDataTemplate"] as ControlTemplate;
 
         /// <summary>
+        /// Возможность добавить день
+        /// </summary>
+        public bool CanAddDay => Days?.Count < 31;
+
+        /// <summary>
         /// Конструктор модели
         /// </summary>
         public DaysOnMonthFreqModel()
@@ -51,9 +57,14 @@ namespace RemindManager.Models.Frequencies
         /// </summary>
         private void AddDay()
         {
-            Days.Add(new DayEntry(1));
-            OnPropertyChanged(nameof(CanRemoveDay));
-            
+            if (Days.Count < 31)
+            {
+                byte n = 1;
+                while (Days.Any(d => d.Day == n)) n++;
+                Days.Add(new DayEntry(n));
+                OnPropertyChanged(nameof(CanRemoveDay));
+                OnPropertyChanged(nameof(CanAddDay));
+            }
         }
 
         /// <summary>
@@ -64,6 +75,7 @@ namespace RemindManager.Models.Frequencies
         {
             _ = Days.Remove(day);
             if (Days.Count == 1) OnPropertyChanged(nameof(CanRemoveDay));
+            OnPropertyChanged(nameof(CanAddDay));
         }
 
         /// <summary>

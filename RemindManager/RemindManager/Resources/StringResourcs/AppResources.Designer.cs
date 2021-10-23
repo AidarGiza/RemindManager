@@ -133,6 +133,15 @@ namespace RemindManager.Resources.StringResourcs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End time.
+        /// </summary>
+        internal static string EndTime {
+            get {
+                return ResourceManager.GetString("EndTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Days in a month.
         /// </summary>
         internal static string FreqDaysOnMonth {
@@ -246,6 +255,24 @@ namespace RemindManager.Resources.StringResourcs {
         internal static string SelectRemFreq {
             get {
                 return ResourceManager.GetString("SelectRemFreq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start time.
+        /// </summary>
+        internal static string StartTime {
+            get {
+                return ResourceManager.GetString("StartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        internal static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
             }
         }
     }

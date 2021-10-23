@@ -1,5 +1,6 @@
 ﻿using RemindManager.Models.Frequencies;
 using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace RemindManager.Models.Interfaces
 {
@@ -34,5 +35,10 @@ namespace RemindManager.Models.Interfaces
         /// Список чисел, которые указывают, за сколько минут нужно напомнить
         /// </summary>
         List<byte> RemindBefore { get; set; }
+
+        /// <summary>
+        /// Шаблон контрола выбора времени
+        /// </summary>
+        public ControlTemplate TimePickerTemplate { get; }
     }
 }

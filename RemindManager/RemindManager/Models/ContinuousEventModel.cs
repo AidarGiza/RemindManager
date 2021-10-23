@@ -1,5 +1,6 @@
 ﻿using RemindManager.Models.Interfaces;
 using System;
+using Xamarin.Forms;
 
 namespace RemindManager.Models
 {
@@ -11,11 +12,26 @@ namespace RemindManager.Models
         /// <summary>
         /// Время начала события
         /// </summary>
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime
+        {
+            get => startTime;
+            set => SetProperty(ref startTime, value);
+        }
+        private TimeSpan startTime;
 
         /// <summary>
         /// Время окончания события
         /// </summary>
-        public DateTime EndTime { get; set; }
+        public TimeSpan EndTime
+        {
+            get => endTime;
+            set => SetProperty(ref endTime, value);
+        }
+        private TimeSpan endTime;
+
+        /// <summary>
+        /// Шаблон контрола выбора времени продолжительного события
+        /// </summary>
+        public override ControlTemplate TimePickerTemplate => Application.Current.Resources["ContinuousEventTimeDataTemplate"] as ControlTemplate;
     }
 }

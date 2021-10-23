@@ -180,4 +180,13 @@
   <data name="DaySun" xml:space="preserve">
     <value>Вс</value>
   </data>
+  <data name="Time" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Время начала</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>Время окончания</value>
+  </data>
 </root>

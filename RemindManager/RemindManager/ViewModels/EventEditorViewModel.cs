@@ -3,6 +3,7 @@ using RemindManager.Models;
 using RemindManager.Models.Frequencies;
 using RemindManager.Models.Interfaces;
 using RemindManager.Resources.StringResourcs;
+using System;
 using System.Collections.Generic;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
@@ -28,7 +29,12 @@ namespace RemindManager.ViewModels
         /// <summary>
         /// Редактируемое событие
         /// </summary>
-        public IReminder Reminder { get; set; }
+        public IReminder Reminder
+        {
+            get => reminder;
+            set => SetProperty(ref reminder, value);
+        }
+        private IReminder reminder;
 
         /// <summary>
         /// Флаг того, что редактируется моментальное событие
@@ -39,7 +45,7 @@ namespace RemindManager.ViewModels
             set
             {
                 SetProperty(ref isInstantEvent, value);
-                ChangeType();
+                if (value) SetType(EventTypesEnum.InstantEvent);
             }
         }
         private bool isInstantEvent;
@@ -53,7 +59,7 @@ namespace RemindManager.ViewModels
             set
             {
                 SetProperty(ref isContinuousEvent, value);
-                ChangeType();
+                if (value) SetType(EventTypesEnum.ContinuousEvent);
             }
         }
         private bool isContinuousEvent;
@@ -87,7 +93,6 @@ namespace RemindManager.ViewModels
                 SetProperty(ref selectedFrequencyModel, value);
             }
         }
-
         private FrequencySelectionModel selectedFrequencyModel;
 
         /// <summary>
@@ -141,8 +146,7 @@ namespace RemindManager.ViewModels
         /// </summary>
         private void InitNewEvent()
         {
-            isInstantEvent = true;
-            Reminder = new InstantEventModel();
+            IsInstantEvent = true;
             PageName = AppResources.NewReminder;
         }
 
@@ -169,22 +173,30 @@ namespace RemindManager.ViewModels
         }
 
         /// <summary>
-        /// Изменить тип редактируемого события, сохранив при этом его главные свойства
+        /// Задать тип редактируемого события, сохранив при этом его главные свойства
         /// </summary>
-        private void ChangeType()
+        private void SetType(EventTypesEnum type)
         {
             IReminder newReminder;
 
-            if (Reminder is ContinuousEventModel) newReminder = new InstantEventModel();
-            else if (Reminder is InstantEventModel) newReminder = new ContinuousEventModel();
+            if (type == EventTypesEnum.InstantEvent) newReminder = new InstantEventModel();
+            else if (type == EventTypesEnum.ContinuousEvent) newReminder = new ContinuousEventModel();
             else newReminder = new InstantEventModel();
-
-            newReminder.Id = Reminder.Id;
-            newReminder.Name = Reminder.Name;
-            newReminder.Frequency = Reminder.Frequency;
-            newReminder.Description = Reminder.Description;
-            newReminder.FrequencyData = Reminder.FrequencyData;
-
+            if (Reminder != null)
+            {
+                newReminder.Id = Reminder.Id;
+                newReminder.Name = Reminder.Name;
+                newReminder.Frequency = Reminder.Frequency;
+                newReminder.Description = Reminder.Description;
+                newReminder.FrequencyData = Reminder.FrequencyData;
+            }
+            int hours = DateTime.Now.Minute < 30 ? DateTime.Now.Hour : DateTime.Now.AddHours(1).Hour;
+            if (newReminder is InstantEventModel instantEvent) instantEvent.EventTime = new TimeSpan(hours, 0, 0);
+            if (newReminder is ContinuousEventModel continuousEvent)
+            {
+                continuousEvent.StartTime = new TimeSpan(hours, 0, 0);
+                continuousEvent.EndTime = continuousEvent.StartTime.Add(new TimeSpan(1, 0, 0));
+            }
             Reminder = newReminder;
         }
 

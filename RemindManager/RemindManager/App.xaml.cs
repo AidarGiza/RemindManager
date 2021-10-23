@@ -1,6 +1,7 @@
 ﻿using RemindManager.Models.Frequencies;
 using RemindManager.Resources.StringResourcs;
 using RemindManager.Services;
+using RemindManager.ViewModels;
 using System;
 using System.IO;
 using System.Linq;
@@ -49,18 +50,41 @@ namespace RemindManager
         {
             if (!string.IsNullOrWhiteSpace(e.NewTextValue))
             {
-                if (e.NewTextValue.Contains('.') || e.NewTextValue.Contains(',')) ((Entry)sender).Text = e.OldTextValue;
-                if (byte.TryParse(e.NewTextValue, out byte val))
-                {
-                    if (val < 1 || val > 31) ((Entry)sender).Text = e.OldTextValue;
-                }
-                else ((Entry)sender).Text = e.OldTextValue;
+                string correctedVal = "";
+                if (e.NewTextValue.Contains('.') || e.NewTextValue.Contains(',')) correctedVal = e.OldTextValue;
+                else if (!byte.TryParse(e.NewTextValue, out byte val)) correctedVal = e.OldTextValue;
+                else if (val < 1 || val > 31) correctedVal = e.OldTextValue;
+                if (!string.IsNullOrWhiteSpace(correctedVal)) ((Entry)sender).Text = correctedVal;
             }
         }
 
         private void DayEntry_Unfocused(object sender, FocusEventArgs e)
         {
             if (((Entry)sender).Text == "") ((Entry)sender).Text = (((Entry)sender).BindingContext as DayEntry).Day.ToString();
+        }
+
+        private void DayStepper_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            var template = ((Stepper)sender).Parent.Parent?.Parent.Parent;
+            DayEntry dayEntry = ((Stepper)sender).BindingContext as DayEntry;
+            if (template?.BindingContext is EventEditorViewModel eventEditor)
+            {
+                if (eventEditor.Reminder.FrequencyData is DaysOnMonthFreqModel domFreq)
+                {
+                    if (domFreq.Days.Any(d => d.Day == e.NewValue && d != dayEntry))
+                    {
+                        int n = (int)(e.NewValue - e.OldValue);
+                        int newValue = (int)e.NewValue;
+                        while (domFreq.Days.Any(d => d.Day == newValue && d != dayEntry))
+                        {
+                            newValue += n;
+                            if (newValue <= 0) newValue = 31;
+                            else if (newValue >= 32) newValue = 1;
+                        }
+                        if (e.NewValue != newValue) ((Stepper)sender).Value = newValue;
+                    }
+                }
+            }
         }
     }
 }

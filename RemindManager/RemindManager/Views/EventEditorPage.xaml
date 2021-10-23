@@ -26,12 +26,15 @@
             <Entry Text="{Binding Reminder.Name, Mode=TwoWay}" />
 
             <Label Margin="10,0" Text="{xct:Translate RemDescription}"/>
-            <Editor Text="{Binding Reminder.Description}" />
+            <Editor Text="{Binding Reminder.Description}"/>
 
             <Label Margin="10,0" Text="{xct:Translate RemFrequency}"/>
             <Picker Title="{xct:Translate SelectRemFreq}" ItemsSource="{Binding Frequencies}" ItemDisplayBinding="{Binding Name.Localized, Mode=TwoWay}" SelectedItem="{Binding SelectedFrequencyModel, Mode=TwoWay}"/>
 
-            <TemplatedView ControlTemplate="{Binding Reminder.FrequencyData.Template}" SizeChanged="TemplatedView_SizeChanged"/>
+            <TemplatedView ControlTemplate="{Binding Reminder.FrequencyData.Template, Mode=TwoWay}" SizeChanged="TemplatedView_SizeChanged"/>
+
+            <TemplatedView ControlTemplate="{Binding Reminder.TimePickerTemplate, Mode=TwoWay}" SizeChanged="TemplatedView_SizeChanged"/>
+            
             <Button Text="{xct:Translate Save}" Command="{Binding SaveCommand}"/>
         </StackLayout>
     </ScrollView>
