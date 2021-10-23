@@ -92,12 +92,15 @@
 
             <!--Шаблон контрола для выбора даты-->
             <ControlTemplate x:Key="OneTimeFreqDataTemplate" x:DataType="freqs:OneTimeFreqModel">
-                <DatePicker/>
+                <StackLayout Orientation="Vertical">
+                    <Label Margin="10,0" Text="{xct:Translate Date}"/>
+                    <DatePicker Date="{TemplateBinding BindingContext.Reminder.FrequencyData.Date}" MinimumDate="{TemplateBinding BindingContext.Reminder.FrequencyData.MinimumDate}"/>
+                </StackLayout>
             </ControlTemplate>
 
             <!--Шаблон контрола каждого дня-->
             <ControlTemplate x:Key="EverydayFreqDataTemplate">
-                <Line/>
+                
             </ControlTemplate>
             
             <!--Шаблон контрола выбора времени мгновенного события-->

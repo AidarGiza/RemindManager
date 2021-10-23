@@ -46,6 +46,11 @@ namespace RemindManager
         {
         }
 
+        /// <summary>
+        /// Действия при вводе дня месяца в поле ввода с помощью клавиатуры
+        /// </summary>
+        /// <param name="sender">Поле ввода</param>
+        /// <param name="e">Аргументы</param>
         private void DayEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(e.NewTextValue))
@@ -58,11 +63,21 @@ namespace RemindManager
             }
         }
 
+        /// <summary>
+        /// Действия при потери фокуса поля ввода дня в месяце
+        /// </summary>
+        /// <param name="sender">Поле ввода</param>
+        /// <param name="e">Аргументы</param>
         private void DayEntry_Unfocused(object sender, FocusEventArgs e)
         {
             if (((Entry)sender).Text == "") ((Entry)sender).Text = (((Entry)sender).BindingContext as DayEntry).Day.ToString();
         }
 
+        /// <summary>
+        /// Действия при изменении значения дня в месяце
+        /// </summary>
+        /// <param name="sender">Stepper</param>
+        /// <param name="e">Аргументы</param>
         private void DayStepper_ValueChanged(object sender, ValueChangedEventArgs e)
         {
             var template = ((Stepper)sender).Parent.Parent?.Parent.Parent;

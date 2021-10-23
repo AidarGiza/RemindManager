@@ -189,4 +189,7 @@
   <data name="EndTime" xml:space="preserve">
     <value>Время окончания</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
 </root>

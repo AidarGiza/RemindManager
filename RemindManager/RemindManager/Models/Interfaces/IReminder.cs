@@ -4,6 +4,9 @@ using Xamarin.Forms;
 
 namespace RemindManager.Models.Interfaces
 {
+    /// <summary>
+    /// Интерфейс напоминания
+    /// </summary>
     public interface IReminder
     {
         /// <summary>

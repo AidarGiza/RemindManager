@@ -1,5 +1,6 @@
 ﻿using RemindManager.Models.Interfaces;
 using System;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace RemindManager.Models.Frequencies
@@ -7,12 +8,19 @@ namespace RemindManager.Models.Frequencies
     /// <summary>
     /// Данные об одноразовом напоминании
     /// </summary>
-    public class OneTimeFreqModel : IFrequencyData
+    public class OneTimeFreqModel : ObservableObject, IFrequencyData
     {
         /// <summary>
         /// Дата напоминаиния
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime Date
+        {
+            get => date;
+            set => SetProperty(ref date, value);
+        }
+        private DateTime date;
+
+        public DateTime MinimumDate => DateTime.Today;
 
         /// <summary>
         /// Шаблон контрола для данных об одноразовом напоминании
