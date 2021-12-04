@@ -1,127 +1,208 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:freqs="clr-namespace:RemindManager.Models.Frequencies"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RemindManager.App">
-    <!--
-        Define global resources and styles here, that apply to all pages in your app.
-    -->
-    <Application.Resources>
-        <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
-            <Style TargetType="Button">
-                <Setter Property="TextColor" Value="White"></Setter>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#332196F3" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+<Application 
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+  xmlns:freqs="clr-namespace:RemindManager.Models.Frequencies"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="RemindManager.App">
+  <!--
+  Define global resources and styles here, 
+  that apply to all pagesin your app.
+  -->
+  <Application.Resources>
+    <ResourceDictionary>
+      <Color x:Key="Primary">#2196F3</Color>
+      <Style TargetType="Button">
+        <Setter Property="TextColor" Value="White"></Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+          <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal">
+                <VisualState.Setters>
+                  <Setter 
+                    Property="BackgroundColor" 
+                    Value="{StaticResource Primary}"/>
+                </VisualState.Setters>
+              </VisualState>
+              <VisualState x:Name="Disabled">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#332196F3"/>
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </VisualStateGroupList>
+        </Setter>
+      </Style>
 
-            <!--Шаблон контрола для выбора дней в месяце-->
-            <ControlTemplate x:Key="DaysOnMonthFreqDataTemplate">
-                <Grid RowDefinitions="Auto,Auto,Auto" >
-                    <StackLayout Margin="5" BindableLayout.ItemsSource="{TemplateBinding BindingContext.Reminder.FrequencyData.Days, Mode=TwoWay}" Grid.Row="1" >
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <StackLayout Orientation="Horizontal">
-                                    <Entry Keyboard="Numeric" Text="{Binding Day}" VerticalOptions="Center" FontSize="23" HorizontalOptions="FillAndExpand" TextChanged="DayEntry_TextChanged" Unfocused="DayEntry_Unfocused"/>
-                                    <Stepper Value="{Binding Day}" Minimum="1" Maximum="31" ValueChanged="DayStepper_ValueChanged"/>
-                                    <Button Text="X" Font="29" CornerRadius="35" Padding="3,-3,0,0" IsVisible="{TemplateBinding BindingContext.Reminder.FrequencyData.CanRemoveDay}" Command="{TemplateBinding BindingContext.Reminder.FrequencyData.RemoveDayCommand}" CommandParameter="{Binding}"/>
-                                </StackLayout>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </StackLayout>
-                    <Button Grid.Row="2" Text="{xct:Translate Add}" Command="{TemplateBinding BindingContext.Reminder.FrequencyData.AddDayCommand}" IsEnabled="{TemplateBinding BindingContext.Reminder.FrequencyData.CanAddDay}"/>
-                </Grid>
-            </ControlTemplate>
-
-            <!--Шаблон контрола для выбора дней в неделе-->
-            <ControlTemplate x:Key="DaysOnWeekFreqDataTemplate" x:DataType="freqs:DaysOnWeekFreqModel">
-                <Grid ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,Auto">
-                    <Label Text="{xct:Translate DayMon}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsMondayChecked}"/>
-
-                    <Label Grid.Column="1" Text="{xct:Translate DayTu}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsTuesdayChecked}"/>
-
-                    <Label Grid.Column="2" Text="{xct:Translate DayWed}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsWednesdayChecked}"/>
-
-                    <Label Grid.Column="3" Text="{xct:Translate DayTh}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="3" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsThursdayChecked}"/>
-
-                    <Label Grid.Column="4" Text="{xct:Translate DayFri}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="4" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsFridayChecked}"/>
-
-                    <Label Grid.Column="5" Text="{xct:Translate DaySat}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="5" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsSaturdayChecked}"/>
-
-                    <Label Grid.Column="6" Text="{xct:Translate DaySun}" HorizontalOptions="Center"/>
-                    <CheckBox Grid.Column="6" Grid.Row="1" HorizontalOptions="Center" IsChecked="{TemplateBinding BindingContext.Reminder.FrequencyData.IsSundayChecked}"/>
-                </Grid>
-            </ControlTemplate>
-
-            <!--Шаблон контрола для выбора дней в году-->
-            <ControlTemplate x:Key="DaysOnYearFreqDataTemplate" x:DataType="freqs:DaysOnYearFreqModel">
-                <ListView ItemsSource="{Binding DayAndMonth}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout>
-                                    <Stepper/>
-                                    <Picker/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ControlTemplate>
-
-            <!--Шаблон контрола для выбора даты-->
-            <ControlTemplate x:Key="OneTimeFreqDataTemplate" x:DataType="freqs:OneTimeFreqModel">
-                <StackLayout Orientation="Vertical">
-                    <Label Margin="10,0" Text="{xct:Translate Date}"/>
-                    <DatePicker Date="{TemplateBinding BindingContext.Reminder.FrequencyData.Date}" MinimumDate="{TemplateBinding BindingContext.Reminder.FrequencyData.MinimumDate}"/>
+      <!--Шаблон контрола для выбора дней в месяце-->
+      <ControlTemplate x:Key="DaysOnMonthFreqDataTemplate">
+        <Grid RowDefinitions="Auto,Auto,Auto" >
+          <StackLayout 
+            Margin="5" BindableLayout.ItemsSource="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.Days, Mode=TwoWay}"
+            Grid.Row="1" >
+            <BindableLayout.ItemTemplate>
+              <DataTemplate>
+                <StackLayout Orientation="Horizontal">
+                  <Entry 
+                    Keyboard="Numeric" Text="{Binding Day}" FontSize="23" 
+                    VerticalOptions="Center" Unfocused="DayEntry_Unfocused"
+                    HorizontalOptions="FillAndExpand"
+                    TextChanged="DayEntry_TextChanged"/>
+                  <Stepper 
+                    Value="{Binding Day}" Minimum="1" Maximum="31" 
+                    ValueChanged="DayStepper_ValueChanged"/>
+                  <Button 
+                    Text="X" Font="29" CornerRadius="35"
+                    Padding="3,-3,0,0" IsEnabled="{TemplateBinding
+                    BindingContext.Reminder.FrequencyData.CanRemoveDay,
+                    Mode=TwoWay}" Command="{TemplateBinding 
+                    BindingContext.Reminder.FrequencyData.RemoveDayCommand}" 
+                    CommandParameter="{Binding}"/>
                 </StackLayout>
-            </ControlTemplate>
+              </DataTemplate>
+            </BindableLayout.ItemTemplate>
+          </StackLayout>
+          <Button 
+            Grid.Row="2" Text="{xct:Translate Add}" 
+            Command="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.AddDayCommand}"
+            IsEnabled="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.CanAddDay}"/>
+        </Grid>
+      </ControlTemplate>
 
-            <!--Шаблон контрола каждого дня-->
-            <ControlTemplate x:Key="EverydayFreqDataTemplate">
-                
-            </ControlTemplate>
-            
-            <!--Шаблон контрола выбора времени мгновенного события-->
-            <ControlTemplate x:Key="InstantEventTimeDataTemplate">
-                <StackLayout Orientation="Vertical">
-                    <Label Margin="10,0" Text="{xct:Translate Time}"/>
-                    <TimePicker Time="{TemplateBinding BindingContext.Reminder.EventTime, Mode=TwoWay}"/>
+      <!--Шаблон контрола для выбора дней в неделе-->
+      <ControlTemplate 
+        x:Key="DaysOnWeekFreqDataTemplate"
+        x:DataType="freqs:DaysOnWeekFreqModel">
+        <Grid 
+          ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,Auto">
+          <Label Text="{xct:Translate DayMon}" HorizontalOptions="Center"/>
+          <CheckBox
+            Grid.Row="1" HorizontalOptions="Center" 
+            IsChecked="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.IsMondayChecked}"/>
+          
+          <Label
+            Grid.Column="1" Text="{xct:Translate DayTu}" 
+            HorizontalOptions="Center"/>
+          <CheckBox 
+            Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"
+            IsChecked="{TemplateBinding
+            BindingContext.Reminder.FrequencyData.IsTuesdayChecked}"/>
+
+          <Label 
+            Grid.Column="2" Text="{xct:Translate DayWed}" 
+            HorizontalOptions="Center"/>
+          <CheckBox
+            Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" 
+            IsChecked="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.IsWednesdayChecked}"/>
+
+          <Label 
+            Grid.Column="3" Text="{xct:Translate DayTh}"
+            HorizontalOptions="Center"/>
+          <CheckBox
+            Grid.Column="3" Grid.Row="1" HorizontalOptions="Center"
+            IsChecked="{TemplateBinding
+            BindingContext.Reminder.FrequencyData.IsThursdayChecked}"/>
+
+          <Label
+            Grid.Column="4" Text="{xct:Translate DayFri}"
+            HorizontalOptions="Center"/>
+          <CheckBox
+            Grid.Column="4" Grid.Row="1" HorizontalOptions="Center"
+            IsChecked="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.IsFridayChecked}"/>
+
+          <Label 
+            Grid.Column="5" Text="{xct:Translate DaySat}" 
+            HorizontalOptions="Center"/>
+          <CheckBox 
+            Grid.Column="5" Grid.Row="1" HorizontalOptions="Center"
+            IsChecked="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.IsSaturdayChecked}"/>
+
+          <Label 
+            Grid.Column="6" Text="{xct:Translate DaySun}"
+            HorizontalOptions="Center"/>
+          <CheckBox
+            Grid.Column="6" Grid.Row="1" HorizontalOptions="Center"
+            IsChecked="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.IsSundayChecked}"/>
+        </Grid>
+      </ControlTemplate>
+
+      <!--Шаблон контрола для выбора дней в году-->
+      <ControlTemplate 
+        x:Key="DaysOnYearFreqDataTemplate" 
+        x:DataType="freqs:DaysOnYearFreqModel">
+        <ListView ItemsSource="{Binding DayAndMonth}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <StackLayout>
+                  <Stepper/>
+                  <Picker/>
                 </StackLayout>
-            </ControlTemplate>
-            
-            <!--Шаблон контрола выбора времени продолжительного события-->
-            <ControlTemplate x:Key="ContinuousEventTimeDataTemplate">
-                <StackLayout Orientation="Vertical">
-                    <Label Margin="10,0" Text="{xct:Translate StartTime}"/>
-                    <TimePicker Time="{TemplateBinding BindingContext.Reminder.StartTime, Mode=TwoWay}"/>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </ControlTemplate>
 
-                    <Label Margin="10,0" Text="{xct:Translate EndTime}"/>
-                    <TimePicker Time="{TemplateBinding BindingContext.Reminder.EndTime, Mode=TwoWay}"/>
-                </StackLayout>
-            </ControlTemplate>
+      <!--Шаблон контрола для выбора даты-->
+      <ControlTemplate 
+        x:Key="OneTimeFreqDataTemplate"
+        x:DataType="freqs:OneTimeFreqModel">
+        <StackLayout Orientation="Vertical">
+          <Label Margin="10,0" Text="{xct:Translate Date}"/>
+          <DatePicker 
+            Date="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.Date}" 
+            MinimumDate="{TemplateBinding
+            BindingContext.Reminder.FrequencyData.MinimumDate}"/>
+        </StackLayout>
+      </ControlTemplate>
 
-        </ResourceDictionary>        
-    </Application.Resources>
+      <!--Шаблон контрола каждого дня-->
+      <ControlTemplate x:Key="EverydayFreqDataTemplate">
+
+      </ControlTemplate>
+
+      <!--Шаблон контрола выбора времени мгновенного события-->
+      <ControlTemplate x:Key="InstantEventTimeDataTemplate">
+        <StackLayout Orientation="Vertical">
+          <Label Margin="10,0" Text="{xct:Translate Time}"/>
+          <TimePicker 
+            Time="{TemplateBinding 
+            BindingContext.Reminder.EventTime, Mode=TwoWay}"/>
+        </StackLayout>
+      </ControlTemplate>
+
+      <!--Шаблон контрола выбора времени продолжительного события-->
+      <ControlTemplate x:Key="ContinuousEventTimeDataTemplate">
+        <StackLayout Orientation="Vertical">
+          <Label Margin="10,0" Text="{xct:Translate StartTime}"/>
+          <TimePicker 
+            Time="{TemplateBinding 
+            BindingContext.Reminder.StartTime, Mode=TwoWay}"/>
+
+          <Label Margin="10,0" Text="{xct:Translate EndTime}"/>
+          <StackLayout Orientation="Horizontal" Margin="0,0,5,0">
+            <TimePicker 
+              HorizontalOptions="FillAndExpand" Time="{TemplateBinding 
+              BindingContext.Reminder.EndTime, Mode=TwoWay}"/>
+            <Label
+              Text="{xct:Translate NextDay}"  FontSize="Medium"
+              IsVisible="{TemplateBinding
+              BindingContext.Reminder.IsEndNextDay}"
+              VerticalOptions="Center"/>
+          </StackLayout>
+          
+        </StackLayout>
+      </ControlTemplate>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>

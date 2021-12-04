@@ -192,4 +192,7 @@
   <data name="Date" xml:space="preserve">
     <value>Дата</value>
   </data>
+  <data name="NextDay" xml:space="preserve">
+    <value>След. день</value>
+  </data>
 </root>

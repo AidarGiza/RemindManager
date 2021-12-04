@@ -10,7 +10,7 @@ namespace RemindManager.Views
         /// <summary>
         /// Главный StackLayout на странице
         /// </summary>
-        StackLayout mainStackLayout;
+        private readonly StackLayout mainStackLayout;
 
         /// <summary>
         /// Конструктор страницы
@@ -22,14 +22,20 @@ namespace RemindManager.Views
         }
 
         /// <summary>
-        /// Обновление StackLayout, потому что он не увеличивается, когда что то добавляется в TemplatedControl
+        /// Обновление StackLayout, потому что он не увеличивается, 
+        /// когда что то добавляется в TemplatedControl
         /// Нужно будет попробовать без этого после обновления Xamarin
         /// </summary>
         public void UpdateLayout()
         {
-            var ds = MeasurHeightRequire(mainStackLayout.Children);
-            ds += mainStackLayout.Children.Count * mainStackLayout.Spacing;
-            mainStackLayout.HeightRequest = ds;
+            if (mainStackLayout != null)
+            {
+                double elenentsHeight =
+                    MeasurHeightRequire(mainStackLayout.Children);
+                elenentsHeight +=
+                    mainStackLayout.Children.Count * mainStackLayout.Spacing;
+                mainStackLayout.HeightRequest = elenentsHeight;
+            }
         }
 
         /// <summary>
@@ -37,10 +43,10 @@ namespace RemindManager.Views
         /// </summary>
         /// <param name="views">Элементы</param>
         /// <returns>Необходимая высота</returns>
-        double MeasurHeightRequire(IList<View> views)
+        private double MeasurHeightRequire(IList<View> views)
         {
             double res = 0;
-            foreach (var view in views)
+            foreach (View view in views)
             {
                 res += view.Bounds.Height;
                 res += view.Margin.Top;
@@ -54,9 +60,22 @@ namespace RemindManager.Views
         /// </summary>
         /// <param name="sender">Control</param>
         /// <param name="e">Аргументы</param>
-        private void TemplatedView_SizeChanged(object sender, System.EventArgs e)
+        private void TemplatedView_SizeChanged(object sender,
+            System.EventArgs e)
         {
             UpdateLayout();
         }
+
+        /// <summary>
+        /// Изменилась высота TemplatedView
+        /// </summary>
+        /// <param name="sender">Control</param>
+        /// <param name="e">Аргументы</param>
+        private void SecondTemplatedView_SizeChanged(object sender,
+            System.EventArgs e)
+        {
+            UpdateLayout();
+        }
+
     }
 }

@@ -74,7 +74,8 @@ namespace RemindManager.ViewModels
         {
 
             string newLang = "ru";
-            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo(newLang);
+            LocalizationResourceManager.Current.CurrentCulture =
+                new CultureInfo(newLang);
             //await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
@@ -83,8 +84,11 @@ namespace RemindManager.ViewModels
             if (item == null)
                 return;
 
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            // This will push the ItemDetailPage onto the
+            // navigation stack
+            await Shell.Current.GoToAsync(
+                $"{nameof(ItemDetailPage)}?" +
+                $"{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
         }
     }
 }

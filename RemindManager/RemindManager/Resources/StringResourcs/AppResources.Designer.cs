@@ -205,6 +205,15 @@ namespace RemindManager.Resources.StringResourcs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next day.
+        /// </summary>
+        internal static string NextDay {
+            get {
+                return ResourceManager.GetString("NextDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continuous.
         /// </summary>
         internal static string RemContinuous {

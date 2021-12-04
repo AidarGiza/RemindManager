@@ -31,7 +31,8 @@ namespace RemindManager.Services
 
         public async Task<bool> UpdateItemAsync(ReminderModel item)
         {
-            var oldItem = items.Where((ReminderModel arg) => arg.Id == item.Id).FirstOrDefault();
+            ReminderModel oldItem = items.Where((ReminderModel arg) =>
+                arg.Id == item.Id).FirstOrDefault();
             items.Remove(oldItem);
             items.Add(item);
 
@@ -40,7 +41,8 @@ namespace RemindManager.Services
 
         public async Task<bool> DeleteItemAsync(string id)
         {
-            var oldItem = items.Where((ReminderModel arg) => arg.Id.ToString() == id).FirstOrDefault();
+            ReminderModel oldItem = items.Where((ReminderModel arg) =>
+                arg.Id.ToString() == id).FirstOrDefault();
             items.Remove(oldItem);
 
             return await Task.FromResult(true);
@@ -48,10 +50,12 @@ namespace RemindManager.Services
 
         public async Task<ReminderModel> GetItemAsync(string id)
         {
-            return await Task.FromResult(items.FirstOrDefault(s => s.Id.ToString() == id));
+            return await Task.FromResult(
+                items.FirstOrDefault(s => s.Id.ToString() == id));
         }
 
-        public async Task<IEnumerable<ReminderModel>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<ReminderModel>> GetItemsAsync(
+            bool forceRefresh = false)
         {
             return await Task.FromResult(items);
         }

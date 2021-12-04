@@ -23,8 +23,10 @@ namespace RemindManager.Models.Frequencies
             get => WeekDays.HasFlag(DaysOfWeekEnum.Monday);
             set 
             {
-                if (value) WeekDays |= DaysOfWeekEnum.Monday;
-                else WeekDays ^= DaysOfWeekEnum.Monday;
+                if (value)
+                    WeekDays |= DaysOfWeekEnum.Monday;
+                else
+                    WeekDays ^= DaysOfWeekEnum.Monday;
                 SetProperty(ref isMondayChecked, value);
             }
         }
@@ -38,8 +40,10 @@ namespace RemindManager.Models.Frequencies
             get => WeekDays.HasFlag(DaysOfWeekEnum.Tuesday);
             set 
             {
-                if (value) WeekDays |= DaysOfWeekEnum.Tuesday;
-                else WeekDays ^= DaysOfWeekEnum.Tuesday;
+                if (value)
+                    WeekDays |= DaysOfWeekEnum.Tuesday;
+                else
+                    WeekDays ^= DaysOfWeekEnum.Tuesday;
                 SetProperty(ref isTuesdayChecked, value);
             }
         }
@@ -53,8 +57,10 @@ namespace RemindManager.Models.Frequencies
             get => WeekDays.HasFlag(DaysOfWeekEnum.Wednesday);
             set 
             {
-                if (value) WeekDays |= DaysOfWeekEnum.Wednesday;
-                else WeekDays ^= DaysOfWeekEnum.Wednesday;
+                if (value)
+                    WeekDays |= DaysOfWeekEnum.Wednesday;
+                else
+                    WeekDays ^= DaysOfWeekEnum.Wednesday;
                 SetProperty(ref isWednesdayChecked, value);
             }
         }
@@ -68,8 +74,10 @@ namespace RemindManager.Models.Frequencies
             get => WeekDays.HasFlag(DaysOfWeekEnum.Thursday);
             set 
             {
-                if (value) WeekDays |= DaysOfWeekEnum.Thursday;
-                else WeekDays ^= DaysOfWeekEnum.Thursday;
+                if (value)
+                    WeekDays |= DaysOfWeekEnum.Thursday;
+                else
+                    WeekDays ^= DaysOfWeekEnum.Thursday;
                 SetProperty(ref isThursdayChecked, value);
             }
         }
@@ -83,8 +91,10 @@ namespace RemindManager.Models.Frequencies
             get => WeekDays.HasFlag(DaysOfWeekEnum.Friday);
             set 
             {
-                if (value) WeekDays |= DaysOfWeekEnum.Friday;
-                else WeekDays ^= DaysOfWeekEnum.Friday;
+                if (value)
+                    WeekDays |= DaysOfWeekEnum.Friday;
+                else
+                    WeekDays ^= DaysOfWeekEnum.Friday;
                 SetProperty(ref isFridayChecked, value);
             }
         }
@@ -98,8 +108,10 @@ namespace RemindManager.Models.Frequencies
             get => WeekDays.HasFlag(DaysOfWeekEnum.Saturday);
             set 
             {
-                if (value) WeekDays |= DaysOfWeekEnum.Saturday;
-                else WeekDays ^= DaysOfWeekEnum.Saturday;
+                if (value)
+                    WeekDays |= DaysOfWeekEnum.Saturday;
+                else
+                    WeekDays ^= DaysOfWeekEnum.Saturday;
                 SetProperty(ref isSaturdayChecked, value);
             }
         }
@@ -113,8 +125,10 @@ namespace RemindManager.Models.Frequencies
             get => WeekDays.HasFlag(DaysOfWeekEnum.Sunday);
             set 
             {
-                if (value) WeekDays |= DaysOfWeekEnum.Sunday;
-                else WeekDays ^= DaysOfWeekEnum.Sunday;
+                if (value)
+                    WeekDays |= DaysOfWeekEnum.Sunday;
+                else
+                    WeekDays ^= DaysOfWeekEnum.Sunday;
                 SetProperty(ref isSundayChecked, value);
             }
         }
@@ -123,6 +137,8 @@ namespace RemindManager.Models.Frequencies
         /// <summary>
         /// Шаблон контрола для выбора дней в неделе
         /// </summary>
-        public ControlTemplate Template => Application.Current.Resources["DaysOnWeekFreqDataTemplate"] as ControlTemplate;
+        public ControlTemplate Template =>
+            Application.Current.Resources["DaysOnWeekFreqDataTemplate"]
+            as ControlTemplate;
     }
 }

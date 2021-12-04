@@ -5,7 +5,8 @@ using System.Text;
 namespace RemindManager.ViewModels
 {
     /// <summary>
-    /// Страница со списком ближайших событий (количество указывается в настройках)
+    /// Страница со списком ближайших событий 
+    /// (количество указывается в настройках)
     /// </summary>
     public class NearestEventsViewModel : BaseViewModel
     {

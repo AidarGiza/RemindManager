@@ -1,4 +1,5 @@
-﻿using RemindManager.Models.Frequencies;
+﻿using RemindManager.Enums;
+using RemindManager.Models.Frequencies;
 using RemindManager.Models.Interfaces;
 using System.Collections.Generic;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -39,7 +40,36 @@ namespace RemindManager.Models
         /// <summary>
         /// Частота события вида <see cref="FrequencySelectionModel"/>
         /// </summary>
-        public FrequencySelectionModel Frequency { get; set; }
+        public FrequencySelectionModel Frequency
+        {
+            get => frequency;
+            set
+            {
+                if (value != null)
+                {
+                    switch (value.Id)
+                    {
+                        case FrequenciesEnum.OneTime: 
+                            FrequencyData = new OneTimeFreqModel(); 
+                            break;
+                        case FrequenciesEnum.DaysOnYear: 
+                            FrequencyData = new DaysOnYearFreqModel(); 
+                            break;
+                        case FrequenciesEnum.DaysOnMonth: 
+                            FrequencyData = new DaysOnMonthFreqModel(); 
+                            break;
+                        case FrequenciesEnum.DaysOnWeek: 
+                            FrequencyData = new DaysOnWeekFreqModel(); 
+                            break;
+                        case FrequenciesEnum.Everyday: 
+                            FrequencyData = null; 
+                            break;
+                    }
+                }
+                SetProperty(ref frequency, value);
+            }
+        }
+        private FrequencySelectionModel frequency;
 
         /// <summary>
         /// Данные частоты напоминания
@@ -52,7 +82,8 @@ namespace RemindManager.Models
         private IFrequencyData frequencyData;
 
         /// <summary>
-        /// Список чисел, которые указывают, за сколько минут нужно напомнить
+        /// Список чисел, которые указывают, 
+        /// за сколько минут нужно напомнить
         /// </summary>
         public List<byte> RemindBefore { get; set; }
 

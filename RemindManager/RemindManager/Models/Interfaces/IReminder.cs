@@ -35,7 +35,8 @@ namespace RemindManager.Models.Interfaces
         IFrequencyData FrequencyData { get; set; }
 
         /// <summary>
-        /// Список чисел, которые указывают, за сколько минут нужно напомнить
+        /// Список чисел, которые указывают, 
+        /// за сколько минут нужно напомнить
         /// </summary>
         List<byte> RemindBefore { get; set; }
 

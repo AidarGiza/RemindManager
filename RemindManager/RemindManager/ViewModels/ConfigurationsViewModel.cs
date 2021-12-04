@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -36,7 +34,8 @@ namespace RemindManager.ViewModels
         public void ChangeLanguage()
         {
             string newLang = "ru";
-            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo(newLang);
+            LocalizationResourceManager.Current.CurrentCulture = 
+                new CultureInfo(newLang);
         }
     }
 }

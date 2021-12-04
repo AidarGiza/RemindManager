@@ -7,7 +7,8 @@ namespace RemindManager.ViewModels
 {
     public class BaseViewModel : ObservableObject
     {
-        public IDataStore<ReminderModel> DataStore => DependencyService.Get<IDataStore<ReminderModel>>();
+        public IDataStore<ReminderModel> DataStore => 
+            DependencyService.Get<IDataStore<ReminderModel>>();
 
         public bool IsBusy
         {

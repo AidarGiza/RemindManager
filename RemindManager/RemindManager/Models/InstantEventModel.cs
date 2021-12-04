@@ -22,6 +22,8 @@ namespace RemindManager.Models
         /// <summary>
         /// Шаблон контрола выбора времени мгновенного события
         /// </summary>
-        public override ControlTemplate TimePickerTemplate => Application.Current.Resources["InstantEventTimeDataTemplate"] as ControlTemplate;
+        public override ControlTemplate TimePickerTemplate =>
+            Application.Current.Resources["InstantEventTimeDataTemplate"]
+            as ControlTemplate;
     }
 }

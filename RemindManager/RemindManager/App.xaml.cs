@@ -20,18 +20,26 @@ namespace RemindManager
         {
             InitializeComponent();
 
-            LocalizationResourceManager.Current.PropertyChanged += CurrentCulture_PropertyChanged;
-            LocalizationResourceManager.Current.Init(AppResources.ResourceManager);
+            LocalizationResourceManager.Current.PropertyChanged +=
+                CurrentCulture_PropertyChanged;
+            LocalizationResourceManager.Current.Init(
+                AppResources.ResourceManager);
 
-            DatabaseService = new DatabaseService(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DB_NAME));
+            DatabaseService =
+                new DatabaseService(Path.Combine(
+                    Environment.GetFolderPath(
+                        Environment.SpecialFolder.LocalApplicationData),
+                    DB_NAME));
 
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
-        private void CurrentCulture_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void CurrentCulture_PropertyChanged(object sender,
+            System.ComponentModel.PropertyChangedEventArgs e)
         {
-            AppResources.Culture = LocalizationResourceManager.Current.CurrentCulture;
+            AppResources.Culture =
+                LocalizationResourceManager.Current.CurrentCulture;
         }
 
         protected override void OnStart()
@@ -47,19 +55,26 @@ namespace RemindManager
         }
 
         /// <summary>
-        /// Действия при вводе дня месяца в поле ввода с помощью клавиатуры
+        /// Действия при вводе дня месяца в поле
+        /// ввода с помощью клавиатуры
         /// </summary>
         /// <param name="sender">Поле ввода</param>
         /// <param name="e">Аргументы</param>
-        private void DayEntry_TextChanged(object sender, TextChangedEventArgs e)
+        private void DayEntry_TextChanged(object sender,
+            TextChangedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(e.NewTextValue))
             {
-                string correctedVal = "";
-                if (e.NewTextValue.Contains('.') || e.NewTextValue.Contains(',')) correctedVal = e.OldTextValue;
-                else if (!byte.TryParse(e.NewTextValue, out byte val)) correctedVal = e.OldTextValue;
-                else if (val < 1 || val > 31) correctedVal = e.OldTextValue;
-                if (!string.IsNullOrWhiteSpace(correctedVal)) ((Entry)sender).Text = correctedVal;
+                string correctedVal = null;
+                if (e.NewTextValue.Contains('.') ||
+                        e.NewTextValue.Contains(','))
+                    correctedVal = e.OldTextValue;
+                else if (!byte.TryParse(e.NewTextValue, out byte val))
+                    correctedVal = e.OldTextValue;
+                else if (val < 1 || val > 31)
+                    correctedVal = e.OldTextValue;
+                if (correctedVal != null)
+                    ((Entry)sender).Text = correctedVal;
             }
         }
 
@@ -70,7 +85,10 @@ namespace RemindManager
         /// <param name="e">Аргументы</param>
         private void DayEntry_Unfocused(object sender, FocusEventArgs e)
         {
-            if (((Entry)sender).Text == "") ((Entry)sender).Text = (((Entry)sender).BindingContext as DayEntry).Day.ToString();
+            if (((Entry)sender).Text == "")
+                ((Entry)sender).Text =
+                    (((Entry)sender).BindingContext as DayEntry).
+                    Day.ToString();
         }
 
         /// <summary>
@@ -78,27 +96,32 @@ namespace RemindManager
         /// </summary>
         /// <param name="sender">Stepper</param>
         /// <param name="e">Аргументы</param>
-        private void DayStepper_ValueChanged(object sender, ValueChangedEventArgs e)
+        private void DayStepper_ValueChanged(object sender,
+            ValueChangedEventArgs e)
         {
-            var template = ((Stepper)sender).Parent.Parent?.Parent.Parent;
-            DayEntry dayEntry = ((Stepper)sender).BindingContext as DayEntry;
-            if (template?.BindingContext is EventEditorViewModel eventEditor)
+            Element template =
+                ((Stepper)sender).Parent.Parent?.Parent.Parent;
+            DayEntry dayEntry =
+                ((Stepper)sender).BindingContext as DayEntry;
+            if (template?.BindingContext is
+                EventEditorViewModel eventEditor &&
+                eventEditor.Reminder.FrequencyData is
+                DaysOnMonthFreqModel domFreq && 
+                domFreq.Days.Any(d => d.Day == e.NewValue && d != dayEntry))
             {
-                if (eventEditor.Reminder.FrequencyData is DaysOnMonthFreqModel domFreq)
+                int n = (int)(e.NewValue - e.OldValue);
+                int newValue = (int)e.NewValue;
+                while (domFreq.Days.
+                    Any(d => d.Day == newValue && d != dayEntry))
                 {
-                    if (domFreq.Days.Any(d => d.Day == e.NewValue && d != dayEntry))
-                    {
-                        int n = (int)(e.NewValue - e.OldValue);
-                        int newValue = (int)e.NewValue;
-                        while (domFreq.Days.Any(d => d.Day == newValue && d != dayEntry))
-                        {
-                            newValue += n;
-                            if (newValue <= 0) newValue = 31;
-                            else if (newValue >= 32) newValue = 1;
-                        }
-                        if (e.NewValue != newValue) ((Stepper)sender).Value = newValue;
-                    }
+                    newValue += n;
+                    if (newValue <= 0)
+                        newValue = 31;
+                    else if (newValue >= 32)
+                        newValue = 1;
                 }
+                if (e.NewValue != newValue)
+                    ((Stepper)sender).Value = newValue;
             }
         }
     }

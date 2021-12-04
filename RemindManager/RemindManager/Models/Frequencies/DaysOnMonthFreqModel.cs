@@ -34,7 +34,9 @@ namespace RemindManager.Models.Frequencies
         /// <summary>
         /// Шаблон контрола для выбора дней в месяце
         /// </summary>
-        public ControlTemplate Template => Application.Current.Resources["DaysOnMonthFreqDataTemplate"] as ControlTemplate;
+        public ControlTemplate Template =>
+            Application.Current.Resources["DaysOnMonthFreqDataTemplate"]
+            as ControlTemplate;
 
         /// <summary>
         /// Возможность добавить день
@@ -74,7 +76,8 @@ namespace RemindManager.Models.Frequencies
         private void RemoveDay(DayEntry day)
         {
             _ = Days.Remove(day);
-            if (Days.Count == 1) OnPropertyChanged(nameof(CanRemoveDay));
+            if (Days.Count == 1) 
+                OnPropertyChanged(nameof(CanRemoveDay));
             OnPropertyChanged(nameof(CanAddDay));
         }
 

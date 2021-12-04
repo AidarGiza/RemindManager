@@ -18,6 +18,8 @@ namespace RemindManager.Models.Frequencies
         /// <summary>
         /// Шаблон контрола для выбора дней в году
         /// </summary>
-        public ControlTemplate Template => Application.Current.Resources["DaysOnYearFreqDataTemplate"] as ControlTemplate;
+        public ControlTemplate Template =>
+            Application.Current.Resources["DaysOnYearFreqDataTemplate"]
+            as ControlTemplate;
     }
 }

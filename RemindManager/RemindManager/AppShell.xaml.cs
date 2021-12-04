@@ -1,7 +1,4 @@
-﻿using RemindManager.ViewModels;
-using RemindManager.Views;
-using System;
-using System.Collections.Generic;
+﻿using RemindManager.Views;
 using Xamarin.Forms;
 
 namespace RemindManager
@@ -11,8 +8,10 @@ namespace RemindManager
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            Routing.RegisterRoute(nameof(ItemDetailPage),
+                typeof(ItemDetailPage));
+            Routing.RegisterRoute(nameof(NewItemPage),
+                typeof(NewItemPage));
         }
 
     }

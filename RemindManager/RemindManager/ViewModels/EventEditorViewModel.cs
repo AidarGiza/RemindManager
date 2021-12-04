@@ -11,7 +11,8 @@ using Xamarin.Forms;
 namespace RemindManager.ViewModels
 {
     /// <summary>
-    /// Страница с полями для заполнения и изменения информации выбранного события
+    /// Страница с полями для заполнения и изменения информации 
+    /// выбранного события
     /// </summary>
     public class EventEditorViewModel : BaseViewModel
     {
@@ -45,7 +46,8 @@ namespace RemindManager.ViewModels
             set
             {
                 SetProperty(ref isInstantEvent, value);
-                if (value) SetType(EventTypesEnum.InstantEvent);
+                if (value)
+                    SetType(EventTypesEnum.InstantEvent);
             }
         }
         private bool isInstantEvent;
@@ -59,7 +61,8 @@ namespace RemindManager.ViewModels
             set
             {
                 SetProperty(ref isContinuousEvent, value);
-                if (value) SetType(EventTypesEnum.ContinuousEvent);
+                if (value)
+                    SetType(EventTypesEnum.ContinuousEvent);
             }
         }
         private bool isContinuousEvent;
@@ -72,28 +75,8 @@ namespace RemindManager.ViewModels
         /// <summary>
         /// Список возможных частот
         /// </summary>
-        public List<FrequencySelectionModel> Frequencies => FrequencySelectionModel.GetList();
-
-        /// <summary>
-        /// Выбранная модель частоты
-        /// </summary>
-        public FrequencySelectionModel SelectedFrequencyModel
-        {
-            get => selectedFrequencyModel;
-            set
-            {
-                switch (value.Id)
-                {
-                    case FrequenciesEnum.OneTime: Reminder.FrequencyData = new OneTimeFreqModel(); break;
-                    case FrequenciesEnum.DaysOnYear: Reminder.FrequencyData = new DaysOnYearFreqModel(); break;
-                    case FrequenciesEnum.DaysOnMonth: Reminder.FrequencyData = new DaysOnMonthFreqModel(); break;
-                    case FrequenciesEnum.DaysOnWeek: Reminder.FrequencyData = new DaysOnWeekFreqModel(); break;
-                    case FrequenciesEnum.Everyday: Reminder.FrequencyData = null; break;
-                }
-                SetProperty(ref selectedFrequencyModel, value);
-            }
-        }
-        private FrequencySelectionModel selectedFrequencyModel;
+        public List<FrequencySelectionModel> Frequencies =>
+            FrequencySelectionModel.GetList();
 
         /// <summary>
         /// Конструктор редактора для создания нового события-0
@@ -105,22 +88,28 @@ namespace RemindManager.ViewModels
 
             SaveCommand = new Command(OnSave);
 
-
-            // Если в параметр передан null, то инициализируется создание нового события
+            // Если в параметр передан null, то инициализируется
+            // создание нового события
             // Иначе - редактирование выбранного
-
-            if (reminderToEdit == null) InitNewEvent();
+            if (reminderToEdit == null)
+                InitNewEvent();
             else
             {
                 Reminder = reminderToEdit;
                 PageName = Reminder.Name;
 
-                if (reminderToEdit is InstantEventModel) isInstantEvent = true;             // Если редактируемое событие - моментальное
-                else if (reminderToEdit is ContinuousEventModel) isContinuousEvent = true;  // Если редактируемое событие - длительное
-                else InitNewEvent();                                                        // Если переданный объект неизвестен создается новое
+                // Если редактируемое событие - моментальное
+                if (reminderToEdit is InstantEventModel)
+                    isInstantEvent = true;
+                // Если редактируемое событие - длительное
+                else if (reminderToEdit is ContinuousEventModel)
+                    isContinuousEvent = true;
+                else
+                    InitNewEvent();                                                        // Если переданный объект неизвестен создается новое
             }
 
-            LocalizationResourceManager.Current.PropertyChanged += CurrentCulture_PropertyChanged;
+            LocalizationResourceManager.Current.PropertyChanged +=
+                CurrentCulture_PropertyChanged;
         }
 
         /// <summary>
@@ -128,7 +117,8 @@ namespace RemindManager.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CurrentCulture_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void CurrentCulture_PropertyChanged(object sender,
+            System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(Frequencies));
         }
@@ -179,9 +169,12 @@ namespace RemindManager.ViewModels
         {
             IReminder newReminder;
 
-            if (type == EventTypesEnum.InstantEvent) newReminder = new InstantEventModel();
-            else if (type == EventTypesEnum.ContinuousEvent) newReminder = new ContinuousEventModel();
-            else newReminder = new InstantEventModel();
+            if (type == EventTypesEnum.InstantEvent)
+                newReminder = new InstantEventModel();
+            else if (type == EventTypesEnum.ContinuousEvent)
+                newReminder = new ContinuousEventModel();
+            else 
+                newReminder = new InstantEventModel();
             if (Reminder != null)
             {
                 newReminder.Id = Reminder.Id;
@@ -190,17 +183,23 @@ namespace RemindManager.ViewModels
                 newReminder.Description = Reminder.Description;
                 newReminder.FrequencyData = Reminder.FrequencyData;
             }
-            int hours = DateTime.Now.Minute < 30 ? DateTime.Now.Hour : DateTime.Now.AddHours(1).Hour;
-            if (newReminder is InstantEventModel instantEvent) instantEvent.EventTime = new TimeSpan(hours, 0, 0);
+            int hours =
+                DateTime.Now.Minute < 30 ?
+                DateTime.Now.Hour :
+                DateTime.Now.AddHours(1).Hour;
+            if (newReminder is InstantEventModel instantEvent) 
+                instantEvent.EventTime = new TimeSpan(hours, 0, 0);
             if (newReminder is ContinuousEventModel continuousEvent)
             {
                 continuousEvent.StartTime = new TimeSpan(hours, 0, 0);
-                continuousEvent.EndTime = continuousEvent.StartTime.Add(new TimeSpan(1, 0, 0));
+                continuousEvent.EndTime =
+                    continuousEvent.StartTime.Add(new TimeSpan(1, 0, 0));
             }
             Reminder = newReminder;
         }
 
-        public LocalizedString Text { get; } = new LocalizedString(() => AppResources.RemInstant);
+        public LocalizedString Text { get; } =
+            new LocalizedString(() => AppResources.RemInstant);
 
     }
 }

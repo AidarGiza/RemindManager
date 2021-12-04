@@ -1,51 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             x:Class="RemindManager.Views.EventEditorPage"
-             xmlns:vm="clr-namespace:RemindManager.ViewModels"
-             xmlns:freqs="clr-namespace:RemindManager.Models.Frequencies"
-             xmlns:utils="clr-namespace:RemindManager.Utils"
-             Title="{Binding PageName}">
-    <ContentPage.BindingContext>
-        <vm:EventEditorViewModel />
-    </ContentPage.BindingContext>
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    <ScrollView VerticalOptions="FillAndExpand" FlowDirection="MatchParent">
-        <StackLayout Orientation="Vertical" x:Name="MainStackLayout">
-            <!--Выбор типа напоминания-->
-            <StackLayout  Margin="0,10" Orientation="Horizontal">
-                <RadioButton Content="{xct:Translate RemInstant}" IsChecked="{Binding IsInstantEvent}" GroupName="EventType" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                <RadioButton Grid.Column="1" Content="{xct:Translate RemContinuous}" IsChecked="{Binding IsContinuousEvent}" GroupName="EventType" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            </StackLayout>
+<ContentPage
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+  x:Class="RemindManager.Views.EventEditorPage"
+  xmlns:vm="clr-namespace:RemindManager.ViewModels"
+  Title="{Binding PageName}">
+  <ContentPage.BindingContext>
+    <vm:EventEditorViewModel />
+  </ContentPage.BindingContext>
+  <ContentPage.Resources>
+    <ResourceDictionary>
 
-            <!--Название напоминания-->
-            <Label Margin="10,0" Text="{xct:Translate RemName}"/>
-            <Entry Text="{Binding Reminder.Name, Mode=TwoWay}" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ScrollView VerticalOptions="FillAndExpand" FlowDirection="MatchParent">
+    <StackLayout Orientation="Vertical" x:Name="MainStackLayout">
+      <!--Выбор типа напоминания-->
+      <StackLayout Margin="0,10" Orientation="Horizontal">
+        <RadioButton 
+          Content="{xct:Translate RemInstant}" GroupName="EventType"
+          IsChecked="{Binding IsInstantEvent}"
+          HorizontalOptions="CenterAndExpand"
+          VerticalOptions="CenterAndExpand"/>
+        <RadioButton 
+          Grid.Column="1" Content="{xct:Translate RemContinuous}"
+          IsChecked="{Binding IsContinuousEvent}" GroupName="EventType"
+          HorizontalOptions="CenterAndExpand" 
+          VerticalOptions="CenterAndExpand"/>
+      </StackLayout>
 
-            <!--Описание напоминания-->
-            <Label Margin="10,0" Text="{xct:Translate RemDescription}"/>
-            <Editor Text="{Binding Reminder.Description}"/>
+      <!--Название напоминания-->
+      <Label Margin="10,0" Text="{xct:Translate RemName}"/>
+      <Entry Text="{Binding Reminder.Name, Mode=TwoWay}" />
 
-            <!--Выбор частоты напоминания-->
-            <Label Margin="10,0" Text="{xct:Translate RemFrequency}"/>
-            <Picker Title="{xct:Translate SelectRemFreq}" ItemsSource="{Binding Frequencies}" ItemDisplayBinding="{Binding Name.Localized, Mode=TwoWay}" SelectedItem="{Binding SelectedFrequencyModel, Mode=TwoWay}"/>
+      <!--Описание напоминания-->
+      <Label Margin="10,0" Text="{xct:Translate RemDescription}"/>
+      <Editor Text="{Binding Reminder.Description}"/>
 
-            <!--Настройки выбранной частоты напоминания (Шаблоны смотреть в App.xaml.cs)-->
-            <TemplatedView ControlTemplate="{Binding Reminder.FrequencyData.Template, Mode=TwoWay}" SizeChanged="TemplatedView_SizeChanged"/>
+      <!--Выбор частоты напоминания-->
+      <Label Margin="10,0" Text="{xct:Translate RemFrequency}"/>
+      <Picker
+        Title="{xct:Translate SelectRemFreq}"
+        ItemsSource="{Binding Frequencies}"
+        ItemDisplayBinding="{Binding Name.Localized, Mode=TwoWay}"
+        SelectedItem="{Binding Reminder.Frequency, Mode=TwoWay}"/>
 
-            <!--Время напоминания для выбранного типа (Шаблоны смотреть в App.xaml.cs)-->
-            <TemplatedView ControlTemplate="{Binding Reminder.TimePickerTemplate, Mode=TwoWay}" SizeChanged="TemplatedView_SizeChanged"/>
-            
-            <!--Кнопка сохранить-->
-            <Button Text="{xct:Translate Save}" Command="{Binding SaveCommand}"/>
-        </StackLayout>
-    </ScrollView>
-        
-            
+      <!--Настройки выбранной частоты напоминания
+            (Шаблоны смотреть в App.xaml.cs)-->
+      <TemplatedView
+        SizeChanged="TemplatedView_SizeChanged"
+        ControlTemplate="{Binding Reminder.FrequencyData.Template,
+        Mode=TwoWay}"/>
 
+      <!--Время напоминания для выбранного типа
+            (Шаблоны смотреть в App.xaml.cs)-->
+      <TemplatedView 
+        ControlTemplate="{Binding Reminder.TimePickerTemplate}"
+        SizeChanged="SecondTemplatedView_SizeChanged"/>
+
+      <!--Кнопка сохранить-->
+      <Button Text="{xct:Translate Save}" Command="{Binding SaveCommand}"/>
+    </StackLayout>
+  </ScrollView>
 </ContentPage>

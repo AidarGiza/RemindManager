@@ -25,13 +25,24 @@ namespace RemindManager.Models
         public TimeSpan EndTime
         {
             get => endTime;
-            set => SetProperty(ref endTime, value);
+            set
+            {
+                SetProperty(ref endTime, value);
+                OnPropertyChanged(nameof(IsEndNextDay));
+            }
         }
         private TimeSpan endTime;
 
         /// <summary>
+        /// Конец события только на следующий день
+        /// </summary>
+        public bool IsEndNextDay => EndTime.Hours < StartTime.Hours;
+
+        /// <summary>
         /// Шаблон контрола выбора времени продолжительного события
         /// </summary>
-        public override ControlTemplate TimePickerTemplate => Application.Current.Resources["ContinuousEventTimeDataTemplate"] as ControlTemplate;
+        public override ControlTemplate TimePickerTemplate => 
+            Application.Current.Resources["ContinuousEventTimeDataTemplate"]
+            as ControlTemplate;
     }
 }

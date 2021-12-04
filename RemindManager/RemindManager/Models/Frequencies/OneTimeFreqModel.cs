@@ -20,11 +20,16 @@ namespace RemindManager.Models.Frequencies
         }
         private DateTime date;
 
+        /// <summary>
+        /// Самый ранний день для выбора
+        /// </summary>
         public DateTime MinimumDate => DateTime.Today;
 
         /// <summary>
         /// Шаблон контрола для данных об одноразовом напоминании
         /// </summary>
-        public ControlTemplate Template => Application.Current.Resources["OneTimeFreqDataTemplate"] as ControlTemplate;
+        public ControlTemplate Template =>
+            Application.Current.Resources["OneTimeFreqDataTemplate"]
+            as ControlTemplate;
     }
 }

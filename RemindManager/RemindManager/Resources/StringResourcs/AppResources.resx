@@ -192,4 +192,7 @@
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="NextDay" xml:space="preserve">
+    <value>Next day</value>
+  </data>
 </root>
