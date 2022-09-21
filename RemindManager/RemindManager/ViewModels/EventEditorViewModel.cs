@@ -163,7 +163,8 @@ namespace RemindManager.ViewModels
         }
 
         /// <summary>
-        /// Задать тип редактируемого события, сохранив при этом его главные свойства
+        /// Задать тип редактируемого события,
+        /// сохранив при этом его главные свойства
         /// </summary>
         private void SetType(EventTypesEnum type)
         {

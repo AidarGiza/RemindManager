@@ -196,6 +196,114 @@ namespace RemindManager.Resources.StringResourcs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to April.
+        /// </summary>
+        internal static string MonApr {
+            get {
+                return ResourceManager.GetString("MonApr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to August.
+        /// </summary>
+        internal static string MonAug {
+            get {
+                return ResourceManager.GetString("MonAug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to December.
+        /// </summary>
+        internal static string MonDec {
+            get {
+                return ResourceManager.GetString("MonDec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to February.
+        /// </summary>
+        internal static string MonFeb {
+            get {
+                return ResourceManager.GetString("MonFeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to January.
+        /// </summary>
+        internal static string MonJan {
+            get {
+                return ResourceManager.GetString("MonJan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to July.
+        /// </summary>
+        internal static string MonJul {
+            get {
+                return ResourceManager.GetString("MonJul", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to June.
+        /// </summary>
+        internal static string MonJun {
+            get {
+                return ResourceManager.GetString("MonJun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to March.
+        /// </summary>
+        internal static string MonMar {
+            get {
+                return ResourceManager.GetString("MonMar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to May.
+        /// </summary>
+        internal static string MonMay {
+            get {
+                return ResourceManager.GetString("MonMay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to November.
+        /// </summary>
+        internal static string MonNov {
+            get {
+                return ResourceManager.GetString("MonNov", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to October.
+        /// </summary>
+        internal static string MonOct {
+            get {
+                return ResourceManager.GetString("MonOct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to September.
+        /// </summary>
+        internal static string MonSep {
+            get {
+                return ResourceManager.GetString("MonSep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New reminder.
         /// </summary>
         internal static string NewReminder {

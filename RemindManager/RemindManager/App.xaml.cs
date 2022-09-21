@@ -101,27 +101,65 @@ namespace RemindManager
         {
             Element template =
                 ((Stepper)sender).Parent.Parent?.Parent.Parent;
+            Element parent = ((Stepper)sender).Parent;
             DayEntry dayEntry =
                 ((Stepper)sender).BindingContext as DayEntry;
             if (template?.BindingContext is
-                EventEditorViewModel eventEditor &&
-                eventEditor.Reminder.FrequencyData is
-                DaysOnMonthFreqModel domFreq && 
-                domFreq.Days.Any(d => d.Day == e.NewValue && d != dayEntry))
+                EventEditorViewModel eventEditor)
             {
-                int n = (int)(e.NewValue - e.OldValue);
-                int newValue = (int)e.NewValue;
-                while (domFreq.Days.
-                    Any(d => d.Day == newValue && d != dayEntry))
+                if (eventEditor.Reminder.FrequencyData is
+                    DaysOnMonthFreqModel domFreq &&
+                    domFreq.Days.Any(d => d.Day == e.NewValue &&
+                        d != dayEntry))
                 {
-                    newValue += n;
-                    if (newValue <= 0)
-                        newValue = 31;
-                    else if (newValue >= 32)
-                        newValue = 1;
+                    int newValue = (int)e.NewValue;
+                    while (domFreq.Days.
+                        Any(d => d.Day == newValue && d != dayEntry))
+                    {
+                        newValue += 1;
+                        if (newValue <= 0)
+                            newValue = 31;
+                        else if (newValue >= 32)
+                            newValue = 1;
+                    }
+                    if (e.NewValue != newValue)
+                        ((Stepper)sender).Value = newValue;
                 }
-                if (e.NewValue != newValue)
-                    ((Stepper)sender).Value = newValue;
+                else if (eventEditor.Reminder.FrequencyData is
+                    DaysOnYearFreqModel doyFreq)
+                {
+                    var sdef = parent.FindByName("MonthPicker");
+                    if (doyFreq.DaysOnYear.Any(d => d.Day == e.NewValue))
+                    {
+                        
+                        //int n = (int)(e.NewValue - e.OldValue);
+                        //int newValue = (int)e.NewValue;
+                        //while (domFreq.Days.
+                        //    Any(d => d.Day == newValue && d != dayEntry))
+                        //{
+                        //    newValue += n;
+                        //    if (newValue <= 0)
+                        //        newValue = 31;
+                        //    else if (newValue >= 32)
+                        //        newValue = 1;
+                        //}
+                        //if (e.NewValue != newValue)
+                        //    ((Stepper)sender).Value = newValue;
+                        
+                    }
+                }
+            }
+        }
+
+        private void MonthStepper_ValueChanged(object sender,
+            ValueChangedEventArgs e)
+        {
+            Element template = ((Stepper)sender).Parent.Parent?.Parent.Parent;
+            Element parent = ((Stepper)sender).Parent;
+            DayEntry dayEntry = ((Stepper)sender).BindingContext as DayEntry;
+            if (template?.BindingContext is EventEditorViewModel eventEditor)
+            {
+
             }
         }
     }

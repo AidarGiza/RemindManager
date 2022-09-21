@@ -41,7 +41,7 @@ namespace RemindManager.Models
         /// <summary>
         /// Шаблон контрола выбора времени продолжительного события
         /// </summary>
-        public override ControlTemplate TimePickerTemplate => 
+        public override ControlTemplate TimePickerTemplate =>
             Application.Current.Resources["ContinuousEventTimeDataTemplate"]
             as ControlTemplate;
     }

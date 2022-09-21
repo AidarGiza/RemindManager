@@ -50,19 +50,19 @@ namespace RemindManager.Models
                     switch (value.Id)
                     {
                         case FrequenciesEnum.OneTime: 
-                            FrequencyData = new OneTimeFreqModel(); 
+                            FrequencyData = new OneTimeFreqModel();
                             break;
                         case FrequenciesEnum.DaysOnYear: 
-                            FrequencyData = new DaysOnYearFreqModel(); 
+                            FrequencyData = new DaysOnYearFreqModel();
                             break;
                         case FrequenciesEnum.DaysOnMonth: 
-                            FrequencyData = new DaysOnMonthFreqModel(); 
+                            FrequencyData = new DaysOnMonthFreqModel();
                             break;
                         case FrequenciesEnum.DaysOnWeek: 
-                            FrequencyData = new DaysOnWeekFreqModel(); 
+                            FrequencyData = new DaysOnWeekFreqModel();
                             break;
-                        case FrequenciesEnum.Everyday: 
-                            FrequencyData = null; 
+                        case FrequenciesEnum.Everyday:
+                            FrequencyData = null;
                             break;
                     }
                 }

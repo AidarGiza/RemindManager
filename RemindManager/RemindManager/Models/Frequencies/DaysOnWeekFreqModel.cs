@@ -27,7 +27,7 @@ namespace RemindManager.Models.Frequencies
                     WeekDays |= DaysOfWeekEnum.Monday;
                 else
                     WeekDays ^= DaysOfWeekEnum.Monday;
-                SetProperty(ref isMondayChecked, value);
+                _ = SetProperty(ref isMondayChecked, value);
             }
         }
         public bool isMondayChecked;
@@ -44,7 +44,7 @@ namespace RemindManager.Models.Frequencies
                     WeekDays |= DaysOfWeekEnum.Tuesday;
                 else
                     WeekDays ^= DaysOfWeekEnum.Tuesday;
-                SetProperty(ref isTuesdayChecked, value);
+                _ = SetProperty(ref isTuesdayChecked, value);
             }
         }
         public bool isTuesdayChecked;
@@ -61,7 +61,7 @@ namespace RemindManager.Models.Frequencies
                     WeekDays |= DaysOfWeekEnum.Wednesday;
                 else
                     WeekDays ^= DaysOfWeekEnum.Wednesday;
-                SetProperty(ref isWednesdayChecked, value);
+                _ = SetProperty(ref isWednesdayChecked, value);
             }
         }
         public bool isWednesdayChecked;
@@ -78,7 +78,7 @@ namespace RemindManager.Models.Frequencies
                     WeekDays |= DaysOfWeekEnum.Thursday;
                 else
                     WeekDays ^= DaysOfWeekEnum.Thursday;
-                SetProperty(ref isThursdayChecked, value);
+                _ = SetProperty(ref isThursdayChecked, value);
             }
         }
         public bool isThursdayChecked;
@@ -95,7 +95,7 @@ namespace RemindManager.Models.Frequencies
                     WeekDays |= DaysOfWeekEnum.Friday;
                 else
                     WeekDays ^= DaysOfWeekEnum.Friday;
-                SetProperty(ref isFridayChecked, value);
+                _ = SetProperty(ref isFridayChecked, value);
             }
         }
         public bool isFridayChecked;
@@ -106,13 +106,13 @@ namespace RemindManager.Models.Frequencies
         public bool IsSaturdayChecked
         {
             get => WeekDays.HasFlag(DaysOfWeekEnum.Saturday);
-            set 
+            set
             {
                 if (value)
                     WeekDays |= DaysOfWeekEnum.Saturday;
                 else
                     WeekDays ^= DaysOfWeekEnum.Saturday;
-                SetProperty(ref isSaturdayChecked, value);
+                _ = SetProperty(ref isSaturdayChecked, value);
             }
         }
         public bool isSaturdayChecked;
@@ -129,7 +129,7 @@ namespace RemindManager.Models.Frequencies
                     WeekDays |= DaysOfWeekEnum.Sunday;
                 else
                     WeekDays ^= DaysOfWeekEnum.Sunday;
-                SetProperty(ref isSundayChecked, value);
+                _ = SetProperty(ref isSundayChecked, value);
             }
         }
         public bool isSundayChecked;

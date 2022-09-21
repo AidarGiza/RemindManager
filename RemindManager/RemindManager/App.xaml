@@ -136,9 +136,54 @@
 
       <!--Шаблон контрола для выбора дней в году-->
       <ControlTemplate 
-        x:Key="DaysOnYearFreqDataTemplate" 
-        x:DataType="freqs:DaysOnYearFreqModel">
-        <ListView ItemsSource="{Binding DayAndMonth}">
+        x:Key="DaysOnYearFreqDataTemplate">
+        <Grid RowDefinitions="Auto,Auto,Auto" >
+          <StackLayout 
+            Margin="5" BindableLayout.ItemsSource="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.DaysOnYear, Mode=TwoWay}"
+            Grid.Row="1" >
+            <BindableLayout.ItemTemplate>
+              <DataTemplate>
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto,Auto,Auto">
+                  <Entry
+                    Keyboard="Numeric" Text="{Binding Day}" FontSize="23" 
+                    VerticalOptions="Center" Unfocused="DayEntry_Unfocused"
+                    HorizontalOptions="FillAndExpand"
+                    TextChanged="DayEntry_TextChanged"/>
+                  <Stepper
+                    Grid.Column="1"
+                    Value="{Binding Day}" Minimum="1" Maximum="31" 
+                    ValueChanged="DayStepper_ValueChanged"/>
+                  <Picker
+                    Grid.Row="1"
+                    x:Name="MonthPicker" ItemsSource="{Binding Months}"
+                    ItemDisplayBinding="{Binding Localized, Mode=TwoWay}"
+                    SelectedIndex="{Binding Month}"/>
+                  <Stepper
+                    Grid.Column="1" Grid.Row="1"
+                    Value="{Binding Month}" Minimum="0" Maximum="11" 
+                    ValueChanged="MonthStepper_ValueChanged"/>
+                  <Button
+                    Grid.Column="2" Grid.RowSpan="2"
+                    Text="X" Font="29" CornerRadius="35"
+                    VerticalOptions="Center"
+                    Padding="3,-3,0,0" IsEnabled="{TemplateBinding
+                    BindingContext.Reminder.FrequencyData.CanRemoveDay,
+                    Mode=TwoWay}" Command="{TemplateBinding 
+                    BindingContext.Reminder.FrequencyData.RemoveDayCommand}" 
+                    CommandParameter="{Binding}"/>
+                </Grid>
+              </DataTemplate>
+            </BindableLayout.ItemTemplate>
+          </StackLayout>
+          <Button 
+            Grid.Row="2" Text="{xct:Translate Add}" 
+            Command="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.AddDayCommand}"
+            IsEnabled="{TemplateBinding 
+            BindingContext.Reminder.FrequencyData.CanAddDay}"/>
+        </Grid>
+        <!--<ListView ItemsSource="{Binding DayAndMonth}">
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
@@ -149,7 +194,7 @@
               </ViewCell>
             </DataTemplate>
           </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
       </ControlTemplate>
 
       <!--Шаблон контрола для выбора даты-->

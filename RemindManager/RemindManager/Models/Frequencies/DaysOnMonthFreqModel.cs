@@ -100,12 +100,12 @@ namespace RemindManager.Models.Frequencies
             get => day;
             set => SetProperty(ref day, value);
         }
-        public byte day;
+        private byte day;
 
         /// <summary>
         /// Конструктор модели дня
         /// </summary>
-        /// <param name="day"></param>
+        /// <param name="day">Число</param>
         public DayEntry(byte day) => Day = day;
     }
 }
